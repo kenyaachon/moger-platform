@@ -1,0 +1,11 @@
+service: moger-proxy-api
+
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: python3.11
+
+functions:
+  hello:
+    handler: auth_service.main
