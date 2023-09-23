@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "auth-service"
+name = "platform-service"
 version = "0.1.0"
 description = ""
 authors = ["Moses Mbugua <swahili1963@gmail.com>"]

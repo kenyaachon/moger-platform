@@ -7,5 +7,5 @@ provider:
   runtime: python3.11
 
 functions:
-  hello:
-    handler: auth_service.main
+  platformApi:
+    handler: platform_service.main.handler
