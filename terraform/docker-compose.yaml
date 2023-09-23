@@ -1,5 +1,0 @@
-services:
-  tf-workspace:
-    build: .
-    ports:
-      - 8000:8000
