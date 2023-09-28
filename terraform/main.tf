@@ -13,6 +13,7 @@ provider "aws" {
 locals {
   cluster_name = "moger-eks-${local.env}"
   env          = "non-prod"
+  domain_name  = "mogercli.com"
 }
 
 resource "random_string" "suffix" {
@@ -110,4 +111,15 @@ resource "aws_eks_addon" "ebs-csi" {
   tags = {
     "eks_addon" = "ebs-csi"
   }
+}
+
+data "aws_route53_zone" "mogercli" {
+  name         = "mogercli.com."
+  private_zone = false
+}
+module "moger_admin" {
+  source                 = "./modules/moger-admin-web-app"
+  env                    = "dev"
+  domain_name            = local.domain_name
+  route53_public_zone_id = data.aws_route53_zone.mogercli.zone_id
 }
