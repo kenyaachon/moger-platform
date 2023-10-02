@@ -1,0 +1,25 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-mogeradmin-dev-214707-authRole",
+      "UnauthRoleArn": "arn:aws:iam::076354166327:role/amplify-mogeradmin-dev-214707-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::076354166327:role/amplify-mogeradmin-dev-214707-authRole",
+      "Region": "us-west-2",
+      "DeploymentBucketName": "amplify-mogeradmin-dev-214707-deployment",
+      "UnauthRoleName": "amplify-mogeradmin-dev-214707-unauthRole",
+      "StackName": "amplify-mogeradmin-dev-214707",
+      "StackId": "arn:aws:cloudformation:us-west-2:076354166327:stack/amplify-mogeradmin-dev-214707/bec56dc0-60de-11ee-a01c-06b19b738523",
+      "AmplifyAppId": "d2u0tun1l4dw6h"
+    },
+    "categories": {
+      "auth": {
+        "mogeradmin18f27964": {
+          "userPoolId": "us-west-2_DZ7Ip9Rcx",
+          "userPoolName": "moger-non-prod-user-pool",
+          "webClientId": "3931n8rlr1kufq4m1702t4mn5n",
+          "nativeClientId": "3931n8rlr1kufq4m1702t4mn5n"
+        }
+      }
+    }
+  }
+}
