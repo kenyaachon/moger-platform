@@ -1,11 +1,41 @@
-service: moger-proxy-api
+service: moger-proxy-api-platform-service
 
 frameworkVersion: "3"
 
 provider:
   name: aws
   runtime: python3.11
+  region: us-west-2
 
 functions:
   platformApi:
     handler: platform_service.main.handler
+    events:
+      - http:
+          path: eks/scale-up
+          method: post
+          authorizer:
+            type: COGNITO_USER_POOLS
+            authorizerId:
+              Ref: ApiGatewayAuthorizer
+      - http:
+          path: eks/scale-down
+          method: post
+          authorizer:
+            type: COGNITO_USER_POOLS
+            authorizerId:
+              Ref: ApiGatewayAuthorizer
+
+resources:
+  Resources:
+    ApiGatewayAuthorizer:
+      Type: AWS::ApiGateway::Authorizer
+      Properties:
+        AuthorizerResultTtlInSeconds: 300
+        IdentitySource: method.request.header.Authorization
+        Name: Cognito
+        RestApiId:
+          Ref: ApiGatewayRestApi
+        Type: COGNITO_USER_POOLS
+        ProviderARNs:
+          - arn:aws:cognito-idp:us-west-2:076354166327:userpool/us-west-2_DZ7Ip9Rcx
