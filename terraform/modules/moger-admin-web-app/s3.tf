@@ -11,6 +11,11 @@ resource "aws_s3_bucket_public_access_block" "moger_admin_public_access" {
   restrict_public_buckets = true
 }
 
+resource "aws_s3_bucket_policy" "moger_admin" {
+  bucket = aws_s3_bucket.moger_admin.id
+  policy = data.aws_iam_policy_document.moger_admin_policy.json
+} 
+
 data "aws_iam_policy_document" "moger_admin_policy" {
   statement {
     principals {
@@ -26,5 +31,7 @@ data "aws_iam_policy_document" "moger_admin_policy" {
       variable = "AWS:SourceArn"
       values   = [aws_cloudfront_distribution.moger_admin_distribution.arn]
     }
+
+    effect = "Allow"
   }
 }
