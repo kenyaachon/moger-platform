@@ -1,0 +1,8 @@
+{
+    "common": {
+        "env": {
+            "AWS_REGION_NAME": "us-west-2"
+        }
+    },
+    "hostedZoneIds": "Z0088045B8G0B9DE468T"
+}

@@ -3,6 +3,7 @@ from fastapi.responses import JSONResponse
 from mangum import Mangum
 import logging
 import boto3
+import os
 from botocore.config import Config
 
 app = FastAPI()
@@ -153,6 +154,18 @@ async def scale_down_eks_cluster():
         logger.info(response)
 
     return JSONResponse(status_code=200, content={"message": "scaling down eks cluster"})
+
+
+@app.get("/healthcheck")
+def perform_healthcheck():
+    region = os.environ["AWS_REGION_NAME"]
+    request_info = {
+        "message": "Moger Platform API: Called HealthCheck",
+        "region": region,
+    }
+    logger.info(request_info)
+
+    return {"healthcheck": "Everything OK!", "region": region}
 
 handler = Mangum(app)
 

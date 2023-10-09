@@ -6,8 +6,11 @@ provider:
   name: aws
   runtime: python3.11
   region: us-west-2
+  stage: ${opt:stage, "dev"}
   iam:
     role: platformServiceRole
+  environment:
+    AWS_REGION_NAME: ${file(./config.${self:provider.stage}.json):common.env.AWS_REGION_NAME}
 
 functions:
   platformApi:
@@ -27,6 +30,9 @@ functions:
             type: COGNITO_USER_POOLS
             authorizerId:
               Ref: ApiGatewayAuthorizer
+      - http:
+          path: healthcheck
+          method: get
 
 resources:
   Resources:
@@ -35,7 +41,7 @@ resources:
       Properties:
         RoleName: platformServiceRole
         AssumeRolePolicyDocument:
-          Version: '2012-10-17'
+          Version: "2012-10-17"
           Statement:
             - Effect: Allow
               Principal:
@@ -47,7 +53,7 @@ resources:
         Policies:
           - PolicyName: platformServiceName
             PolicyDocument:
-              Version: '2012-10-17'
+              Version: "2012-10-17"
               Statement:
                 - Effect: Allow
                   Action:
@@ -56,13 +62,12 @@ resources:
                     - logs:PutLogEvents
                     - logs:TagResource
                   Resource:
-                    - 'Fn::Join':
-                      - ':'
-                      -
-                        - 'arn:aws:logs'
-                        - Ref: 'AWS::Region'
-                        - Ref: 'AWS::AccountId'
-                        - 'log-group:/aws/lambda/*:*:*'
+                    - "Fn::Join":
+                        - ":"
+                        - - "arn:aws:logs"
+                          - Ref: "AWS::Region"
+                          - Ref: "AWS::AccountId"
+                          - "log-group:/aws/lambda/*:*:*"
                 - Effect: Allow
                   Action:
                     - eks:DescribeNodegroup
@@ -83,3 +88,11 @@ resources:
         Type: COGNITO_USER_POOLS
         ProviderARNs:
           - arn:aws:cognito-idp:us-west-2:076354166327:userpool/us-west-2_DZ7Ip9Rcx
+
+plugins:
+  - serverless-python-requirements
+
+custom:
+  pythonRequirements:
+    usePoetry: true
+    pythonBin: python3
