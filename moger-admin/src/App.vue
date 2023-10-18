@@ -1,6 +1,26 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
+import { Auth } from 'aws-amplify'
 import HelloWorld from './components/HelloWorld.vue'
+import { onBeforeMount, ref } from 'vue'
+import { userLoggedIn } from './utils/auth'
+import router from './router'
+let loggedIn = ref(false)
+onBeforeMount(async () => {
+  console.log('here is a video')
+  loggedIn.value = await userLoggedIn()
+})
+
+function logUserOut() {
+  console.log('logging user out')
+  try {
+    Auth.signOut()
+    loggedIn.value = false
+    router.push('/login')
+  } catch (error) {
+    console.error('error logging out user')
+  }
+}
 </script>
 
 <template>
@@ -13,6 +33,7 @@ import HelloWorld from './components/HelloWorld.vue'
       <nav>
         <RouterLink to="/">Home</RouterLink>
       </nav>
+      <button v-if="loggedIn" @click="logUserOut">Log Out</button>
     </div>
   </header>
 
