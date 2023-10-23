@@ -1,7 +1,8 @@
 {
     "common": {
         "env": {
-            "AWS_REGION_NAME": "us-west-2"
+            "AWS_REGION_NAME": "us-west-2",
+            "ALLOWED_CROSS_ORIGIN": "https://moger-admin-dev.mogercli.com"
         }
     },
     "hostedZoneIds": "Z0088045B8G0B9DE468T"

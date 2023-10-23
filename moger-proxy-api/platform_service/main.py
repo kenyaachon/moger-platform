@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 from mangum import Mangum
 import logging
 import boto3
@@ -7,6 +8,17 @@ import os
 from botocore.config import Config
 
 app = FastAPI()
+
+
+origins = os.environ["ALLOWED_CROSS_ORIGIN"]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
 my_config = Config(region_name = 'us-west-2')

@@ -11,6 +11,7 @@ provider:
     role: platformServiceRole
   environment:
     AWS_REGION_NAME: ${file(./config.${self:provider.stage}.json):common.env.AWS_REGION_NAME}
+    ALLOWED_CROSS_ORIGIN: ${file(./config.${self:provider.stage}.json):common.env.ALLOWED_CROSS_ORIGIN}
 
 functions:
   platformApi:
@@ -19,6 +20,12 @@ functions:
       - http:
           path: eks/scale-up
           method: post
+          cors:
+            origins:
+              - 'https://moger-admin-dev.mogercli.com'
+            headers: 
+              - 'Authorization'
+              - 'Content-Type'
           authorizer:
             type: COGNITO_USER_POOLS
             authorizerId:
@@ -26,6 +33,12 @@ functions:
       - http:
           path: eks/scale-down
           method: post
+          cors:
+            origins:
+              - 'https://moger-admin-dev.mogercli.com'
+            headers: 
+              - 'Authorization'
+              - 'Content-Type'
           authorizer:
             type: COGNITO_USER_POOLS
             authorizerId:

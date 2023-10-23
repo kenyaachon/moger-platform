@@ -23,7 +23,7 @@ This template demonstrates how to deploy a Python function running on AWS Lambda
 In order to deploy the example, you need to run the following command:
 
 ```
-$ serverless deploy
+$ serverless deploy --stage dev --config serverless.platform_service.yml
 ```
 
 After running deploy, you should see output similar to:
