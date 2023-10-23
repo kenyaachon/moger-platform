@@ -1,6 +1,6 @@
 #!/bin/bash
 
-npm run build
+npm run build -- -- --mode dev
 
 aws s3 sync dist s3://moger-admin-dev
 

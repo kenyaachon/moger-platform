@@ -11,12 +11,12 @@ onBeforeMount(async () => {
   loggedIn.value = await userLoggedIn()
 })
 
-function logUserOut() {
+async function logUserOut() {
   console.log('logging user out')
   try {
-    Auth.signOut()
+    await Auth.signOut()
     loggedIn.value = false
-    router.push('/login')
+    router.replace('/')
   } catch (error) {
     console.error('error logging out user')
   }
